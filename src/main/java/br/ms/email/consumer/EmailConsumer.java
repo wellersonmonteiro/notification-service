@@ -1,10 +1,15 @@
 package br.ms.email.consumer;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListeners;
+import br.ms.email.dto.EmailRecordDto;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EmailConsumer {
-    @RabbitListeners(queues = "${broker.queue.email.nome}")
-    public void
+
+    @RabbitListener(queues = "${broker.queue.email.nome}")
+    public void listenEmailQueue(@Payload EmailRecordDto emailRecordDto) {
+        System.out.println(emailRecordDto.emailTo());
+    }
 }
